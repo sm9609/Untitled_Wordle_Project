@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import java.util.*;
+
 public class WordleConfig {
     public enum Guess {
         GREEN,
@@ -16,45 +18,47 @@ public class WordleConfig {
     private final String[] words;
 
     static int MAX_MOVES = 6;
-    private String[][] grid;
+    private Character[][] grid;
     private final int secretWordLength;
     private int attempts;
 
     private String currentGuess;
     private String[] correctGuesses;
     private HashMap<Character,Guess> guessedLetters;
-    private ArrayList<String> correctLetters;
-    private ArrayList<String> wrongLetters;
+    private Character[] possibleLetters =
+            {'a','b','c','d', 'e','f','g','h','i', 'j','k','l','m','n', 'o','p','q','r','s','t', 'u','v','w','x','y','z'};
+    private ArrayList<Character> correctLetters;
+    private ArrayList<Character> wrongLetters;
 
     /*Constructor*/
     public WordleConfig(String secretWord,String[] words){
         this.secretWord = secretWord;
         this.words = words;
-        this.grid = new String[MAX_MOVES][secretWord.length()];
+        this.grid = new Character[MAX_MOVES][secretWord.length()];
         this.secretWordLength = secretWord.length();
         this.guessedLetters = new HashMap<Character,Guess>();
         this.correctGuesses = new String[secretWordLength];
-        this.correctLetters = new ArrayList<String>();
-        this.wrongLetters = new ArrayList<String>();
+        this.correctLetters = new ArrayList<Character>();
+        this.wrongLetters = new ArrayList<Character>();
 
         this.attempts = 0;
     }
 
     /* Player Function */
-    private String tryLetter(char l, int index){
+    private Character tryLetter(char l, int index){
         if(secretWord.charAt(index) == l){
             guessedLetters.put(secretWord.charAt(index),Guess.GREEN);
-            correctLetters.add(String.valueOf(l));
+            correctLetters.add(l);
         }
         else if(secretWord.contains(String.valueOf(l))){
             guessedLetters.put(secretWord.charAt(index),Guess.YELLOW);
-            correctLetters.add(String.valueOf(l));
+            correctLetters.add(l);
         }
         else{
             guessedLetters.put(secretWord.charAt(index),Guess.RED);
-            wrongLetters.add(String.valueOf(l));
+            wrongLetters.add(l);
         }
-        return String.valueOf(l);
+        return l;
     }
 
     public Boolean guessWord(String word){
@@ -81,8 +85,8 @@ public class WordleConfig {
             if(str.length() != secretWordLength){
                 return false;
             }
-            for(int i = 0; i < str.length(); i++){
-                if(){
+            for(char letter: str.toCharArray()){
+                if(Chars){
                     return false;
                 }
             }
